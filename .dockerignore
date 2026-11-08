@@ -1,0 +1,10 @@
+.git
+.github
+tests
+examples
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+data
+dlm/v1/*_pb2*.py

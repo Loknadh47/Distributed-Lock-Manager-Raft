@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raft-dlm"
+version = "0.1.0"
+description = "Distributed lock manager built on a from-scratch Raft implementation (Python, gRPC)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "grpcio>=1.62",
+    "protobuf>=4.25",
+]
+
+[project.optional-dependencies]
+dev = ["grpcio-tools>=1.62", "pytest>=8", "ruff"]
+
+[project.scripts]
+dlm-server = "dlm.server:main"
+dlm = "dlm.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dlm*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["dlm/v1/*_pb2*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]

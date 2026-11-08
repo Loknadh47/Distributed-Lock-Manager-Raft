@@ -1,0 +1,34 @@
+x-node: &node
+  build: .
+  restart: unless-stopped
+  environment: &env
+    PEERS: n1=n1:50051,n2=n2:50051,n3=n3:50051
+
+services:
+  n1:
+    <<: *node
+    environment: { <<: *env, NODE_ID: n1 }
+    ports: ["50051:50051"]
+    volumes: ["n1-data:/data"]
+  n2:
+    <<: *node
+    environment: { <<: *env, NODE_ID: n2 }
+    ports: ["50052:50051"]
+    volumes: ["n2-data:/data"]
+  n3:
+    <<: *node
+    environment: { <<: *env, NODE_ID: n3 }
+    ports: ["50053:50051"]
+    volumes: ["n3-data:/data"]
+
+  # docker compose --profile tools run --rm cli acquire my-lock --owner alice
+  cli:
+    build: .
+    profiles: ["tools"]
+    entrypoint: ["python", "-m", "dlm.cli", "--addrs", "n1:50051,n2:50051,n3:50051"]
+    depends_on: [n1, n2, n3]
+
+volumes:
+  n1-data:
+  n2-data:
+  n3-data:

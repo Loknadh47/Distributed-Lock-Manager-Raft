@@ -243,15 +243,7 @@ Built to demonstrate the algorithm, not as a production lock service.
 - No TLS/authentication on the gRPC ports
 - No fair wait-queue (clients poll with jittered backoff)
 
-## License
-MIT
-=======
-Limitations / roadmap
 
-Built to demonstrate the algorithm, not as a production lock service.
-
-No log compaction/snapshots (WAL and in-memory log grow without bound)
-No dynamic membership changes (cluster is static)
 No pre-vote; reads aren't linearizable via ReadIndex
 No TLS/authentication on the gRPC ports
 No fair wait-queue (clients poll with jittered backoff)
